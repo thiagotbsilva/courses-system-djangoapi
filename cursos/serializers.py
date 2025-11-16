@@ -20,7 +20,17 @@ class AvaliacaoSerializer(serializers.ModelSerializer):
         )
 
 class CursoSerializer(serializers.ModelSerializer):
+    
+    # 1.Nested Relationship:
+    #avaliacoes = AvaliacaoSerializer(many=True, read_only=True)
+    
+    # 2.HyperLinked Related Field:
+    #(nomeRota-função), pois endpoint será gerado automaticamente via ViewSet e Router
+    #avaliacoes = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='avaliacao-detail')
 
+    # 3.Primary Key Related Field:
+    avaliacoes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    
     class Meta:
         model = Curso
         fields = (
@@ -28,5 +38,6 @@ class CursoSerializer(serializers.ModelSerializer):
             'titulo',
             'url',
             'criacao',
-            'ativo'
+            'ativo',
+            'avaliacoes'
         )
